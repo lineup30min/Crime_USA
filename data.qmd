@@ -1,5 +1,18 @@
 # Data
 
-## Description
+## Technical description
+In our project, we leverage data sourced from the Federal Bureau of Investigation's Crime Data Explorer (accessible at https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/downloads), curated by Xinran She. Our focus is on analyzing the causes of arrests categorized by crime, with an emphasis on distinguishing between adult and juvenile arrests. To this end, we utilize three datasets: "Reported Number of Adult Arrests by Crime," "Reported Number of Juvenile Arrests by Crime," and "Hate Crime 2022". These records are reliable because only data from agencies that provided arrest records for 12 months of the year can be included. Meanwhile, they are in CSV format, which can be directly imported and read in R, offering ease of access and compatibility for our subsequent data visualization efforts.
+
+### Reported Number of Adult Arrests by Crime
+This dataset comprises data on the monthly count of adult arrests for a range of offenses, as reported by cooperating law enforcement agencies, spanning 1995 to 2016. The file was last modified in 2017 and is now completed. The dataset includes 644 rows and 47 columns. Each row of the data represents an offense reason based on a specific year, and the columns decompose the count of the arrested adults by age, race, and sex. The age range of offenders covered by this form is 18-65 years old. From the website, agencies might not provide race information, but age and sex should be clearly reported. So, some of the missing gender information may affect the subsequent visualization and analysis.
+
+### Reported Number of Juvenile Arrests by Crime
+Similar to 2.1-1, this dataset records the monthly count of juvenile arrests for different offenses, as reported by participating law enforcement agencies from 1995 to 2016. The file was last modified in 2017 and is now completed. The dataset includes 690 rows and 27 columns. Each row of the data represents an offense reason based on a specific year, and the columns decompose the count of the arrested adults by age, race, and sex. The age range of offenders covered by this form is 9-17 years old. The potential problem with the data is the same as 2.1-1 due to the insufficiency of race information.
+
+### Hate Crime 2022
+The hate crime dataset compiles annual data from 1991 to 2022, last updated in 2023, encompassing details on incidents, offenses, and involved individuals - both victims and offenders - in crimes driven by the perpetrator's bias towards the victim's race, gender, gender identity, religion, disability, sexual orientation, or ethnicity. Due to the extensive size of the original file, our analysis is concentrated on the data from 2022. This dataset segment contains 11,643 rows and 28 columns, each representing an individual incident and providing comprehensive incident details, including geographical location, numbers of victims and offenders, and the nature of the bias involved. A challenge presented by this dataset is its considerable size and the abundance of categorical data it contains. To effectively glean insights, engaging in data manipulation, compiling, and analyzing aggregate information is necessary.
+
+## Research plan
+
 
 ## Missing value analysis
