@@ -142,8 +142,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description"><span class="header-section-number">2.1</span> Description</a></li>
-  <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.2</span> Missing value analysis</a></li>
+  <li><a href="#technical-description" id="toc-technical-description" class="nav-link active" data-scroll-target="#technical-description"><span class="header-section-number">2.1</span> Technical description</a>
+  <ul class="collapse">
+  <li><a href="#reported-number-of-adult-arrests-by-crime" id="toc-reported-number-of-adult-arrests-by-crime" class="nav-link" data-scroll-target="#reported-number-of-adult-arrests-by-crime"><span class="header-section-number">2.1.1</span> Reported Number of Adult Arrests by Crime</a></li>
+  <li><a href="#reported-number-of-juvenile-arrests-by-crime" id="toc-reported-number-of-juvenile-arrests-by-crime" class="nav-link" data-scroll-target="#reported-number-of-juvenile-arrests-by-crime"><span class="header-section-number">2.1.2</span> Reported Number of Juvenile Arrests by Crime</a></li>
+  <li><a href="#hate-crime-2022" id="toc-hate-crime-2022" class="nav-link" data-scroll-target="#hate-crime-2022"><span class="header-section-number">2.1.3</span> Hate Crime 2022</a></li>
+  </ul></li>
+  <li><a href="#research-plan" id="toc-research-plan" class="nav-link" data-scroll-target="#research-plan"><span class="header-section-number">2.2</span> Research plan</a></li>
+  <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/thisisliulu/Crime_USA/edit/main/data.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/thisisliulu/Crime_USA/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -167,11 +173,27 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="description" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="description"><span class="header-section-number">2.1</span> Description</h2>
+<section id="technical-description" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="technical-description"><span class="header-section-number">2.1</span> Technical description</h2>
+<p>In our project, we leverage data sourced from the Federal Bureau of Investigation’s Crime Data Explorer (accessible at https://cde.ucr.cjis.gov/LATEST/webapp/#/pages/downloads), curated by Xinran She. Our focus is on analyzing the causes of arrests categorized by crime, with an emphasis on distinguishing between adult and juvenile arrests. To this end, we utilize three datasets: “Reported Number of Adult Arrests by Crime,” “Reported Number of Juvenile Arrests by Crime,” and “Hate Crime 2022”. These records are reliable because only data from agencies that provided arrest records for 12 months of the year can be included. Meanwhile, they are in CSV format, which can be directly imported and read in R, offering ease of access and compatibility for our subsequent data visualization efforts.</p>
+<section id="reported-number-of-adult-arrests-by-crime" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="reported-number-of-adult-arrests-by-crime"><span class="header-section-number">2.1.1</span> Reported Number of Adult Arrests by Crime</h3>
+<p>This dataset comprises data on the monthly count of adult arrests for a range of offenses, as reported by cooperating law enforcement agencies, spanning 1995 to 2016. The file was last modified in 2017 and is now completed. The dataset includes 644 rows and 47 columns. Each row of the data represents an offense reason based on a specific year, and the columns decompose the count of the arrested adults by age, race, and sex. The age range of offenders covered by this form is 18-65 years old. From the website, agencies might not provide race information, but age and sex should be clearly reported. So, some of the missing gender information may affect the subsequent visualization and analysis.</p>
 </section>
-<section id="missing-value-analysis" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.2</span> Missing value analysis</h2>
+<section id="reported-number-of-juvenile-arrests-by-crime" class="level3" data-number="2.1.2">
+<h3 data-number="2.1.2" class="anchored" data-anchor-id="reported-number-of-juvenile-arrests-by-crime"><span class="header-section-number">2.1.2</span> Reported Number of Juvenile Arrests by Crime</h3>
+<p>Similar to 2.1-1, this dataset records the monthly count of juvenile arrests for different offenses, as reported by participating law enforcement agencies from 1995 to 2016. The file was last modified in 2017 and is now completed. The dataset includes 690 rows and 27 columns. Each row of the data represents an offense reason based on a specific year, and the columns decompose the count of the arrested adults by age, race, and sex. The age range of offenders covered by this form is 9-17 years old. The potential problem with the data is the same as 2.1-1 due to the insufficiency of race information.</p>
+</section>
+<section id="hate-crime-2022" class="level3" data-number="2.1.3">
+<h3 data-number="2.1.3" class="anchored" data-anchor-id="hate-crime-2022"><span class="header-section-number">2.1.3</span> Hate Crime 2022</h3>
+<p>The hate crime dataset compiles annual data from 1991 to 2022, last updated in 2023, encompassing details on incidents, offenses, and involved individuals - both victims and offenders - in crimes driven by the perpetrator’s bias towards the victim’s race, gender, gender identity, religion, disability, sexual orientation, or ethnicity. Due to the extensive size of the original file, our analysis is concentrated on the data from 2022. This dataset segment contains 11,643 rows and 28 columns, each representing an individual incident and providing comprehensive incident details, including geographical location, numbers of victims and offenders, and the nature of the bias involved. A challenge presented by this dataset is its considerable size and the abundance of categorical data it contains. To effectively glean insights, engaging in data manipulation, compiling, and analyzing aggregate information is necessary.</p>
+</section>
+</section>
+<section id="research-plan" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="research-plan"><span class="header-section-number">2.2</span> Research plan</h2>
+</section>
+<section id="missing-value-analysis" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</h2>
 
 
 </section>
