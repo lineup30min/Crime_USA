@@ -6,11 +6,11 @@ execute:
   echo: true
 
 book:
-  title: "YOUR PROJECT TITLE"
+  title: "EDAV Crime: Is there any pattern in arrests by crime?"
   author:
-    - AUTHOR1 (UNI1)
-    - AUTHOR2 (UNI2)
-  repo-url: https://github.com/YOUR_GITHUB_ACCOUNT/REPO_NAME
+    - Xinran She (xs2518)
+    - Lu Liu (ll3721)
+  repo-url: https://github.com/thisisliulu/Crime_USA
   date: today
   page-footer:
     right: |
