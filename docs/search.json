@@ -4,7 +4,28 @@
     "href": "index.html",
     "title": "EDAV Crime: Is there any pattern in arrests by crime?",
     "section": "",
-    "text": "1 Introduction"
+    "text": "1 Introduction\n“It’s easy to be judgmental about crime when you live in a world wealthy enough to be removed from it. But the hood taught me that everyone has different notions of right and wrong, different definitions of what constitutes crime.” –Trevor Noah, Born a Crime"
+  },
+  {
+    "objectID": "index.html#motivation",
+    "href": "index.html#motivation",
+    "title": "EDAV Crime: Is there any pattern in arrests by crime?",
+    "section": "1.1 Motivation",
+    "text": "1.1 Motivation\nMy partner and I are new to New York. Moving from San Diego, top desirable place according to US News, to New York, my personal experience and observations spark an interest in exploring crime patterns in the United States. The catalyst for this exploration is a poignant event happened several blocks away form my apartment–a shooting incident in October–even though nobody was shot. Additionally, as members of the Columbia Community, my partner and I receive Clery Alerts by email several times, providing an awareness of potential concerns.\nRecognizing that emotions might speak louder than fact, we are interested in understanding the number of arrests by crimes between adults and juvenile in the nation, the common identity of criminals, and discovering the motivations that constitutes crimes. We aim to analyze and discern the pattern to mitigate risks in the future. Also, we want to gain more empirical insights into the safety of New York compared to other parts of the country from the datasets.\nFor this EDAV final project, we choose to focus on three datasets obtained from the Federal Bureau of Investigation (FBI) website: hate crime, number of adult arrests by crime, and number of juvenile arrests by crime. We will introduce date information in the following Data section."
+  },
+  {
+    "objectID": "index.html#for-readers-who-are-not-familiar-with-hate-crime",
+    "href": "index.html#for-readers-who-are-not-familiar-with-hate-crime",
+    "title": "EDAV Crime: Is there any pattern in arrests by crime?",
+    "section": "1.2 For readers who are not familiar with Hate Crime",
+    "text": "1.2 For readers who are not familiar with Hate Crime\nFrom U.S. Department of Justice, Hate Crime is “at the federal level, a crime motivated by bias against race, color, religion, national origin, sexual orientation, gender, gender identity, or disability.” Rather than emphasis on “the feeling of hate”, it shows the bias towards certain groups with specific characteristics.\nHate Crime is considered as crime because it contains physical or verbal harms. For example, a person says “I hate transgenders, why do they dress like that?” and began shouting threats is a type of Hate Crime."
+  },
+  {
+    "objectID": "index.html#questions-and-objectives",
+    "href": "index.html#questions-and-objectives",
+    "title": "EDAV Crime: Is there any pattern in arrests by crime?",
+    "section": "1.3 Questions and Objectives",
+    "text": "1.3 Questions and Objectives\nFrom the datasets, we are interested in studying the questions:\n\nWhat identity factors, like age, gender, or race, are most associative with arrests by crime of juveniles and adults, and is there any similarity or difference between the two groups?\nWhat are the most common motivations behind crimes in the United States–economic factor, drug and alcohol abuse, or others?\nHow do the arrest populations vary in different years, and are there correlations with socio-economic factors in nation during certain years?\nWhat are the states with highest Hate crime (does New York in it)? What are the highest location, offender race and bias type in 2022?"
   },
   {
     "objectID": "data.html#technical-description",
@@ -25,6 +46,6 @@
     "href": "data.html#missing-value-analysis",
     "title": "2  Data",
     "section": "2.3 Missing value analysis",
-    "text": "2.3 Missing value analysis"
+    "text": "2.3 Missing value analysis\n\n2.3.1 First load our dataset:\n\n\nCode\narrest_juvenile = read.csv(\"preprocessing/arrests_national_juvenile.csv\")\narrest_adults = read.csv(\"preprocessing/arrests_national_adults.csv\")\nhate_crime22 = read.csv(\"preprocessing/hate_crime_2022.csv\")\n\n\n\n\n2.3.2 Use aggregated missing patterns to check missing values in each dataset:\nArrest_juvenile\n\n\nCode\nlibrary(redav)\nlibrary(ggplot2)\nplot_missing(arrest_juvenile, percent = FALSE)+\n  theme_bw(5)\n\n\n\n\n\nThe column “state_abbr” (state abbreviation)is completely missing. Unfortunately, we couldn’t find other datasets which perfectly make up for the lack of state abbreviation. Since our main goal is not about discovering arrest crimes in states, we decide to drop “state_abbr” column. We have several missing values in “american_indian” and “asian_pacific_islander”, which are more likely to be missing due to “not all agencies report race and/or ethnicity for arrests” from the FBI. We also have missing values in “f_0_9”, f_0_12”, “m_0_9”, “f_13_14”, “f_15”, “m_10_12”, “f_16” in decreasing order. Even though “all agencies must report age and sex”, it is hard to implement in reality, and some agencies might not consistently report data which lead to missing values. Since missing values are not correlated with other variables and take up only a small percent, we would drop rows with missing values.\nArrest_adults\n\n\nCode\nplot_missing(arrest_adults, percent = FALSE)+\n  theme_bw(5)\n\n\n\n\n\nSimilarly, the column “state_abbr” (state abbreviation)is completely missing. This time, we have fewer columns with missing values, only “f_60_64”, f_65_p”, “f_55_59” in decreasing order. In other words, we can see missing values are concentrated in females aged between 55 to 65+. The interesting pattern might caused by certain oversight when reporting elderly women in the agencies. Since missing values are not correlated with other variables and take up only a small percent, we would drop rows with missing values.\nHate Crime\n\n\nCode\nplot_missing(hate_crime22, percent = FALSE)+\n  theme_bw(5)\n\n\n\n\n\nWe have equal number of missing values in “adult_offender_count” and “juvenile_offender_count”. They are correlated because in each hate crime incident, agencies either report all the offenders, or they fail to report. The number of missing value of “juvenile_victim_count” is slightly higher than “adult_victim_count”. One of the possible explanation is that the agencies are more likely to protect the privacy of juvenile that they choose not to report in the reality. We also have missing values in “total_individual_victims”, given “total_individual_victims” is likely correlated with “juvenile_victim_count” and “adult_victim_count”. Since for Hate Crime, we are more interested in the “location, offender race and bias type” instead of the number of offenders and victims, we could subset the dataset to drop the columns with missing values."
   }
 ]

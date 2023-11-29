@@ -1,1 +1,25 @@
 # Introduction
+*“It’s easy to be judgmental about crime when you live in a world wealthy enough to be removed from it. But the hood taught me that everyone has different notions of right and wrong, different definitions of what constitutes crime." --Trevor Noah, Born a Crime*
+
+## Motivation
+My partner and I are new to New York. Moving from San Diego, top desirable place according to US News, to New York, my personal experience and observations spark an interest in exploring crime patterns in the United States. The catalyst for this exploration is a poignant event happened several blocks away form my apartment--a shooting incident in October--even though nobody was shot. Additionally, as members of the Columbia Community, my partner and I receive Clery Alerts by email several times, providing an awareness of potential concerns. 
+
+Recognizing that emotions might speak louder than fact, we are interested in understanding the number of arrests by crimes between adults and juvenile in the nation, the common identity of criminals, and discovering the motivations that constitutes crimes. We aim to analyze and discern the pattern to mitigate risks in the future. Also, we want to gain more empirical insights into the safety of New York compared to other parts of the country from the datasets.
+
+For this EDAV final project, we choose to focus on three datasets obtained from the Federal Bureau of Investigation (FBI) website: hate crime, number of adult arrests by crime, and number of juvenile arrests by crime. We will introduce date information in the following Data section.
+
+## For readers who are not familiar with Hate Crime
+From U.S. Department of Justice, **Hate Crime** is "at the federal level, a crime motivated by bias against race, color, religion, national origin, sexual orientation, gender, gender identity, or disability." Rather than emphasis on "the feeling of hate", it shows the bias towards certain groups with specific characteristics. 
+
+Hate Crime is considered as crime because it contains physical or verbal harms. For example, a person says "I hate transgenders, why do they dress like that?" and began shouting threats is a type of Hate Crime.
+
+## Questions and Objectives
+From the datasets, we are interested in studying the questions:
+
+1. What identity factors, like age, gender, or race, are most associative with arrests by crime of juveniles and adults, and is there any similarity or difference between the two groups?
+
+2. What are the most common motivations behind crimes in the United States--economic factor, drug and alcohol abuse, or others?
+
+3. How do the arrest populations vary in different years, and are there correlations with socio-economic factors in nation during certain years?
+
+4. What are the states with highest Hate crime (does New York in it)? What are the highest location, offender race and bias type in 2022?
