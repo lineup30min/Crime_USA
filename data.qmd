@@ -35,7 +35,7 @@ plot_missing(arrest_juvenile, percent = FALSE)+
   theme_bw(5)
 ```
 
-The column "state_abbr" (state abbreviation)is completely missing. Unfortunately, we couldn't find other datasets which perfectly make up for the lack of state abbreviation. Since our main goal is not about discovering arrest crimes in states, we decide to drop "state_abbr" column. We have several missing values in "american_indian" and "asian_pacific_islander", which are more likely to be missing due to "not all agencies report race and/or ethnicity for arrests" from the FBI. We also have missing values in "f_0_9", f_0_12", "m_0_9", "f_13_14", "f_15", "m_10_12", "f_16" in decreasing order. Even though "all agencies must report age and sex", it is hard to implement in reality, and some agencies might not consistently report data which lead to missing values. Since missing values are not correlated with other variables and take up only a small percent, we would drop rows with missing values.
+The column "state_abbr" (state abbreviation)is completely absent. Unfortunately, we couldn't find other datasets which perfectly make up for the lack of state abbreviation. Since our main goal is not about discovering arrest crimes in specific states, we decide to drop "state_abbr" column. We have several missing values in "american_indian" and "asian_pacific_islander", which are more likely to be missing due to "not all agencies report race and/or ethnicity for arrests" from the FBI. We also have missing values in "f_0_9", f_0_12", "m_0_9", "f_13_14", "f_15", "m_10_12", "f_16" in decreasing order. Even though "all agencies must report age and sex", it is hard to implement in reality. By intuition, these omissions might stem from the actual absence of instances, given that the corresponding class values are zero. For example, in 2016, there is a missing value for males aged between 0 to 9 arrested for Embezzlement. Given the unlikely occurrence of embezzlement by children under 10, it is reasonable to impute it as 0. Since missing values are not correlated with other variables and take up only a small percent, we would impute 0 for the missing values in those columns.
 
 **Arrest_adults**
 ```{r}
@@ -46,7 +46,7 @@ plot_missing(arrest_adults, percent = FALSE)+
   theme_bw(5)
 ```
 
-Similarly, the column "state_abbr" (state abbreviation)is completely missing. This time, we have fewer columns with missing values, only "f_60_64", f_65_p", "f_55_59" in decreasing order. In other words, we can see missing values are concentrated in females aged between 55 to 65+. The interesting pattern might caused by certain oversight when reporting elderly women in the agencies. Since missing values are not correlated with other variables and take up only a small percent, we would drop rows with missing values.
+Similarly, the column "state_abbr" (state abbreviation)is entirely missing. This time, we have fewer columns with missing values, only "f_60_64", f_65_p", "f_55_59" in decreasing order. In other words, we can see missing values are concentrated in females aged between 55 to 65+. The interesting pattern might caused by certain oversight when reporting elderly women in the agencies. Or, it may be attributed to the likelihood that women aged above 55 are hardly prone to crimes, which is reasonable for us to interpret the corresponding class values as 0. Since missing values are not correlated with other variables and take up only a small percent, we would impute 0 for the missing values in those columns.
 
 **Hate Crime**
 ```{r}
