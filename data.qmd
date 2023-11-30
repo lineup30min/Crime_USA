@@ -65,3 +65,39 @@ plot_missing(hate_crime22, percent = FALSE)+
 ```
 
 We have equal number of missing values in "adult_offender_count" and "juvenile_offender_count". They are correlated because in each hate crime incident, agencies either report all the offenders, or they fail to report. The number of missing value of "juvenile_victim_count" is slightly higher than "adult_victim_count". One of the possible explanation is that the agencies are more likely to protect the privacy of juvenile that they choose not to report in the reality. We also have missing values in "total_individual_victims", given "total_individual_victims" is likely correlated with "juvenile_victim_count" and  "adult_victim_count". Since for **Hate Crime**, we are more interested in the "location, offender race and bias type" instead of the number of offenders and victims, we could subset the dataset to drop the columns with missing values.
+
+### Missing value imputation and column drop
+```{r}
+# drop column
+library(dplyr)
+arrest_juvenile <- select(arrest_juvenile, -state_abbr)
+# imputation the missing value
+arrest_juvenile[is.na(arrest_juvenile)] <- 0
+```
+
+```{r}
+arrest_adults <- select(arrest_adults, -state_abbr)
+# imputation the missing value
+arrest_adults[is.na(arrest_adults)] <- 0
+```
+
+
+```{r}
+hate_crime22 <- select(hate_crime22, select = -c("adult_offender_count", "juvenile_offender_count", "juvenile_victim_count",
+                                                 "adult_victim_count", "total_individual_victims"))
+```
+
+### Check NA value
+```{r}
+arrest_juvenile_null = sum(is.na(arrest_juvenile))
+print(paste("NA value in arrest_juvenile: ", arrest_juvenile_null))
+
+
+arrest_adults_null = sum(is.na(arrest_adults))
+print(paste("NA value in arrest_adults: ", arrest_adults_null))
+
+hate_crime_null = sum(is.na(hate_crime22))
+print(paste("NA value in hate_crime22: ", hate_crime_null))
+
+```
+
