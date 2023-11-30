@@ -187,6 +187,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#first-load-our-dataset" id="toc-first-load-our-dataset" class="nav-link" data-scroll-target="#first-load-our-dataset"><span class="header-section-number">2.3.1</span> First load our dataset:</a></li>
   <li><a href="#use-aggregated-missing-patterns-to-check-missing-values-in-each-dataset" id="toc-use-aggregated-missing-patterns-to-check-missing-values-in-each-dataset" class="nav-link" data-scroll-target="#use-aggregated-missing-patterns-to-check-missing-values-in-each-dataset"><span class="header-section-number">2.3.2</span> Use aggregated missing patterns to check missing values in each dataset:</a></li>
+  <li><a href="#missing-value-imputation-and-column-drop" id="toc-missing-value-imputation-and-column-drop" class="nav-link" data-scroll-target="#missing-value-imputation-and-column-drop"><span class="header-section-number">2.3.3</span> Missing value imputation and column drop</a></li>
+  <li><a href="#check-na-value" id="toc-check-na-value" class="nav-link" data-scroll-target="#check-na-value"><span class="header-section-number">2.3.4</span> Check NA value</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/thisisliulu/Crime_USA/edit/main/data.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/thisisliulu/Crime_USA/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -287,6 +289,80 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We have equal number of missing values in “adult_offender_count” and “juvenile_offender_count”. They are correlated because in each hate crime incident, agencies either report all the offenders, or they fail to report. The number of missing value of “juvenile_victim_count” is slightly higher than “adult_victim_count”. One of the possible explanation is that the agencies are more likely to protect the privacy of juvenile that they choose not to report in the reality. We also have missing values in “total_individual_victims”, given “total_individual_victims” is likely correlated with “juvenile_victim_count” and “adult_victim_count”. Since for <strong>Hate Crime</strong>, we are more interested in the “location, offender race and bias type” instead of the number of offenders and victims, we could subset the dataset to drop the columns with missing values.</p>
+</section>
+<section id="missing-value-imputation-and-column-drop" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="missing-value-imputation-and-column-drop"><span class="header-section-number">2.3.3</span> Missing value imputation and column drop</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop column</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>arrest_juvenile <span class="ot">&lt;-</span> <span class="fu">select</span>(arrest_juvenile, <span class="sc">-</span>state_abbr)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># imputation the missing value</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>arrest_juvenile[<span class="fu">is.na</span>(arrest_juvenile)] <span class="ot">&lt;-</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>arrest_adults <span class="ot">&lt;-</span> <span class="fu">select</span>(arrest_adults, <span class="sc">-</span>state_abbr)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># imputation the missing value</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>arrest_adults[<span class="fu">is.na</span>(arrest_adults)] <span class="ot">&lt;-</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>hate_crime22 <span class="ot">&lt;-</span> <span class="fu">select</span>(hate_crime22, <span class="at">select =</span> <span class="sc">-</span><span class="fu">c</span>(<span class="st">"adult_offender_count"</span>, <span class="st">"juvenile_offender_count"</span>, <span class="st">"juvenile_victim_count"</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                                                 <span class="st">"adult_victim_count"</span>, <span class="st">"total_individual_victims"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="check-na-value" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="check-na-value"><span class="header-section-number">2.3.4</span> Check NA value</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>arrest_juvenile_null <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(arrest_juvenile))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"NA value in arrest_juvenile: "</span>, arrest_juvenile_null))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "NA value in arrest_juvenile:  0"</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>arrest_adults_null <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(arrest_adults))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"NA value in arrest_adults: "</span>, arrest_adults_null))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "NA value in arrest_adults:  0"</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>hate_crime_null <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(hate_crime22))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"NA value in hate_crime22: "</span>, hate_crime_null))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "NA value in hate_crime22:  0"</code></pre>
+</div>
+</div>
 
 
 </section>
