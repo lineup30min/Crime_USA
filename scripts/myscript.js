@@ -50,9 +50,9 @@ var adult =  [{'year': 1994, 'arrestCount': 9742152},
   {'year': 2016, 'arrestCount': 8075886}];
 
 // set the dimensions and margins of the graph
-var margin = {top: 10, right: 30, bottom: 30, left: 100},
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+var margin = {top: 30, right: 30, bottom: 30, left: 80},
+    width = 600 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("div#plot")
@@ -65,7 +65,7 @@ var svg = d3.select("div#plot")
 
 // Initialise a X axis:
 var x = d3.scaleLinear()
-    .range([0, width]);
+    .range([0, width-100]);
 
 
 var xAxis = d3.axisBottom().scale(x);
@@ -79,6 +79,46 @@ var yAxis = d3.axisLeft().scale(y);
 svg.append("g")
   .attr("class","Yaxis")
 
+svg.selectAll(".point")
+  .data(data)
+  .enter().append("circle")
+  .attr("class", "point")
+  .attr("cx", function(d) { return x(d.year); })
+  .attr("cy", function(d) { return y(d.arrestCount); })
+  .attr("r", 5) // radius of the point
+  .style("opacity", 0) // make the point invisible
+  .on('click', function(event, d) {
+    // Display the values when clicked
+    displayValues(d.ser1, d.arrestCount);
+  });
+
+function displayValues(xValue, yValue) {
+  // Remove previous values
+  svg.selectAll('.text-info').remove();
+
+  // Append new text
+  var text = svg.append('text')
+    .attr('class', 'text-info')
+    .attr('x', x(xValue))
+    .attr('y', y(yValue))
+    .attr('dy', '-1em') // to position the text above the point
+    .style('fill', 'black')
+    .style('font-size', '12px');
+
+  text.append('tspan')
+    .attr('x', x(xValue)) // Set the x position of the tspan element
+    .attr('dy', '-1.2em') // Shift the tspan position up
+    .text(`year: ${xValue}`);
+
+  // Add 'arrestCount' on a new line
+  text.append('tspan')
+    .attr('x', x(xValue)) // Align this tspan element with the first
+    .attr('dy', '1.2em') // Move this tspan below the first
+    .text(`arrestCount: ${yValue}`);
+
+}
+
+
 // Create a function that takes a dataset as input and update the plot:
 function update(data) {
 
@@ -88,7 +128,7 @@ function update(data) {
     .duration(3000)
     .call(xAxis);
 
-  // create the Y axis
+// create the Y axis
   y.domain([0, d3.max(data, function(d) { return d.arrestCount; })]);
   svg.selectAll(".Yaxis").transition()
     .duration(3000)
@@ -119,15 +159,23 @@ function update(data) {
       .attr("fill", "none")
       .attr("stroke", "steelblue")
       .attr("stroke-width", 2.5)
+
+       var points = svg.selectAll(".point")
+    .data(data);
+
+  points.enter().append("circle")
+    .merge(points)
+    .attr("class", "point")
+    .attr("cx", function(d) { return x(d.year); })
+    .attr("cy", function(d) { return y(d.arrestCount); })
+    .attr("r", 5)
+    .style("opacity", 0)
+    .on('click', function(event, d) {
+      displayValues(d.year, d.arrestCount);
+    });
 }
 
-// At the beginning, I run the update function on the first dataset:
 update(juvenile)
-
-
-
-
-
 
 
 
