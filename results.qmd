@@ -1,1 +1,201 @@
 # Results
+
+### Load Package
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+# install.packages('usmap')
+library(usmap)
+library(plotly)
+```
+
+### First load our dataset:
+
+```{r}
+arrest_juvenile = read.csv("preprocessing/arrests_national_juvenile.csv")
+arrest_adults = read.csv("preprocessing/arrests_national_adults.csv")
+hate_crime22 = read.csv("preprocessing/hate_crime_2022.csv")
+```
+
+### Preprocessing (missing value)
+```{r}
+# drop column
+arrest_juvenile <- select(arrest_juvenile, -state_abbr)
+# imputation the missing value
+arrest_juvenile[is.na(arrest_juvenile)] <- 0
+
+arrest_adults <- select(arrest_adults, -state_abbr)
+# imputation the missing value
+arrest_adults[is.na(arrest_adults)] <- 0
+hate_crime22 <- select(hate_crime22, select = -c("adult_offender_count", "juvenile_offender_count", "juvenile_victim_count",
+                                                 "adult_victim_count", "total_individual_victims"))
+```
+
+### Preprocessing (generate new features for visualization)
+```{r}
+# Generate total arrest and log version of total arrest features
+arrest_juvenile <- arrest_juvenile %>%
+  mutate(total_arrest = total_male + total_female) 
+
+arrest_juvenile <- arrest_juvenile %>%
+  mutate(log_total_arrest = log(total_male + total_female)) 
+
+arrest_adults <- arrest_adults %>%
+  mutate(total_arrest = total_male + total_female)
+
+arrest_adults <- arrest_adults %>%
+  mutate(log_total_arrest = log(total_male + total_female))
+
+```
+
+
+```{r}
+arrest_juvenile <- arrest_juvenile %>%
+  group_by(offense_name) %>%
+  mutate(median_log_total_arrest = median(log_total_arrest)) %>%
+  ungroup() %>%
+  mutate(offense_name = reorder(offense_name, median_log_total_arrest))
+
+arrest_adults <- arrest_adults %>%
+  group_by(offense_name) %>%
+  mutate(median_log_total_arrest = median(log_total_arrest)) %>%
+  ungroup() %>%
+  mutate(offense_name = reorder(offense_name, median_log_total_arrest))
+
+
+ggplot(arrest_juvenile, aes(y = offense_name, x = log_total_arrest)) + 
+  geom_boxplot() +
+  labs(title = "Juvenile Arrest Count by Offense Name", x = "Offense Name", y = "Case Count (log scaled)") +
+  theme_minimal() +
+  theme(legend.position = "bottom") # Adjust legend position as needed
+
+
+ggplot(arrest_adults, aes(y = offense_name, x = log_total_arrest)) + 
+  geom_boxplot() +
+  labs(title = "Adult Arrest Count by Offense Name", x = "Offense Name", y = "Case Count (log scaled)") +
+  theme_minimal() +
+  theme(legend.position = "bottom") # Adjust legend position as needed
+```
+In addressing the question about predominant motivations for crimes in the United States, we conducted an in-depth analysis using boxplots to examine the frequency of various offenses committed by both juveniles and adults. To account for the wide variance in the raw number of cases, we applied logarithmic scaling to the case counts, which effectively narrowed the data range while preserving the underlying distribution patterns. In our visualizations, offenses are delineated along the y-axis, against the log-scaled case counts on the x-axis. We organized the offenses in order of decreasing median case count to highlight the most prevalent factors. Aside from the category 'all other offenses,' which appears as a primary cause for both juveniles and adults, the data indicates that juveniles are most frequently apprehended for larceny, whereas adults are more often detained for drug abuse violations. Moreover, "Manslaughter by Negligence" emerged as the least common grounds for arrests in both demographics. Distinctly, "Curfew and Loitering Law Violations" stand out as a significant cause only for juveniles, while "Driving Under the Influence" is a unique concern for adults.
+
+
+```{r}
+# combine arrest_juvenile and arrest_adults by age
+age_juvenile_group = c("0_9", "10_12", "13_14", "15", "16", "17")
+
+for(age in age_juvenile_group) {
+    male_col <- paste0("m_", age)
+    female_col <- paste0("f_", age)
+    total_col <- age
+    arrest_juvenile[[total_col]] <- rowSums(arrest_juvenile[, c(male_col, female_col)], na.rm = TRUE)
+}
+
+age_adult_groups <- c("18", "19", "20", "21", "22", "23", "24", "25_29", "30_34", "35_39", "40_44", "45_49", "50_54", "55_59", "60_64", "65p")
+
+for(age in age_adult_groups) {
+    male_col <- paste0("m_", age)
+    female_col <- paste0("f_", age)
+    total_col <- age
+    arrest_adults[[total_col]] <- rowSums(arrest_adults[, c(male_col, female_col)], na.rm = TRUE)
+}
+
+# re-edit groups
+arrest_adults["20b"] = arrest_adults["18"] + arrest_adults["19"] + arrest_adults["20"]
+arrest_adults["21_24"] = arrest_adults["21"] + arrest_adults["22"] + arrest_adults["23"] + arrest_adults["24"]
+age_adult_groups_edit <- c("20b", "21_24", "25_29", "30_34", "35_39", "40_44", "45_49", "50_54", "55_59", "60_64", "65p")
+
+arrest_juvenile_age = arrest_juvenile[c("year", "0_9", "10_12", "13_14", "15", "16", "17")]
+arrest_adults_age =  arrest_adults[c("year", "20b", "21_24", "25_29", "30_34", "35_39", "40_44", "45_49", "50_54", "55_59", "60_64", "65p")]
+
+long_df_juvenile <- pivot_longer(arrest_juvenile_age, 
+                        cols =  all_of(age_juvenile_group),
+                        names_to = "age", 
+                        values_to = "count")
+long_df_adult <- pivot_longer(arrest_adults_age,
+                        cols = all_of(age_adult_groups_edit),
+                        names_to = "age",
+                        values_to = "count")
+
+```
+
+
+```{r}
+# Time series plot
+arrest_juveniles_by_year  <- arrest_juvenile %>%
+  group_by(year) %>%
+  summarize(year_arrest_juveniles = sum(total_arrest)) %>%
+  ungroup()
+
+arrest_adults_by_year <- arrest_adults %>%
+  group_by(year) %>%
+  summarize(year_arrest_adult = sum(total_arrest)) %>%
+  ungroup()
+
+arrest_by_year <- merge(arrest_juveniles_by_year, arrest_adults_by_year, by = "year")
+arrest_by_year["total"] = arrest_by_year["year_arrest_juveniles"] + arrest_by_year["year_arrest_adult"]
+
+ggplot(arrest_by_year) +
+  geom_line(aes(x = year, y = year_arrest_juveniles, color = "Juveniles")) +
+  geom_line(aes(x = year, y = year_arrest_adult, color = "Adults")) +
+  geom_line(aes(x = year, y = total, color = "Total")) +
+  scale_color_manual(values = c("Juveniles" = "blue", "Adults" = "red", "Total" = "green")) +
+  labs(title = "Arrests Over Time by Year",
+       x = "Year",
+       y = "Number of Arrests",
+       color = "Age Group")
+
+```
+To analyze the arrest trends, time series plots were created to visualize the number of total arrests alongside the breakdown for 'Adults' and 'Juveniles' from 1994 to 2016. The data reveals a consistent decrease in arrest numbers across these years for all age categories. The line representing adults, shown in red, demonstrates a steady decrease from its highest point in 1994, declining towards 2016. This trend may reflect shifts in some possible reasons, like law enforcement strategies, policy changes, or a genuine drop in criminal behavior. In contrast, the juvenile arrests, depicted by the blue line, also show a continual decline, but with significantly lower figures compared to adult arrests.
+
+```{r}
+ggplot(long_df_juvenile, aes(x = factor(year), y = count, fill = age)) +
+    geom_bar(stat = "identity") +
+    scale_fill_brewer(palette = "RdYlBu") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+    labs(title = "Stacked Bar Plot of Offense Counts by Juvenile Age Group",
+         x = "Year",
+         y = "Count",
+         fill = "Age")
+
+
+ggplot(long_df_adult, aes(x = factor(year), y = count, fill = age)) +
+    geom_bar(stat = "identity") +
+    scale_fill_brewer(palette = "RdYlBu") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    labs(title = "Stacked Bar Plot of Offense Counts by Adult Age Group",
+         x = "Year",
+         y = "Count",
+         fill = "Age")
+
+```
+To breakdown the above trend by age group, we created a stacked bar chart displaying data from 1994 to 2016. The x-axis marks the years, while the y-axis quantifies the offense counts. Each bar denotes a specific year, with various color-coded segments representing the different juvenile age groups. These segments transition from dark blue to red, signifying age groups ranging from 0-9 to 17 years, as detailed in the chart's legend.
+
+For the juvenile population, the total number of arrests shows a declining trend, with individual age subgroups also demonstrating varying degrees of decrease. In contrast, the adult population exhibits a less pronounced downward trend, with certain age subgroups, particularly those aged 65 and over, experiencing a slight increase in arrests.
+
+Apart from the very young age group of 0-9 years in the juvenile category, the differences among the remaining age groups are relatively minor. Similarly, among adults, aside from the 65-plus demographic, the variations between age groups do not show marked significance.
+
+
+```{r}
+# states with highest Hate crime
+incident_counts <- hate_crime22 %>%
+  group_by(state_name) %>%
+  summarize(incident_count = n()) %>%
+  ungroup()
+
+incident_counts["state"] = incident_counts["state_name"]
+
+g <- plot_usmap(data = incident_counts, values = "incident_count", color = "grey") + 
+  scale_fill_viridis_c(option = "magma", name = "Incident Count", direction = -1) + 
+  theme(legend.position = "right")
+
+interactive_us_map <- ggplotly(g)
+interactive_us_map
+```
+
+To address the question concerning which states experience the highest rates of hate crimes, we employed a geospatial visualization to illustrate the spread and relative frequency of such incidents across the United States. The map assigns a color to each state that corresponds to its total incident count, with a legend to the right translating the intensity of the color to the number of incidents. According to the visualization, states such as California and one in the Northeast—presumably New York—are marked in dark purple, signaling a larger number of recorded incidents, with New York reporting 935 incidents and California registering 2,088, potentially the highest in the dataset. On the other hand, lighter hues such as pale yellow denote lower incident counts, exemplified by regions like Guam and Arkansas.
+
+
+
