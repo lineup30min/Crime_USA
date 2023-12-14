@@ -337,7 +337,7 @@ ggplot(arrest_by_year) +
        x = "Year",
        y = "Number of Arrests",
        color = "Age Group")
-
+write.csv(arrest_by_year, file = "preprocessing/d3_ts.csv", row.names = FALSE)
 ```
 To analyze the arrest trends, time series plot was created to visualize the number of total arrests alongside the breakdown for 'Adults' and 'Juveniles' from 1994 to 2016. The data reveals a consistent decrease in arrest numbers across these years for all age categories. The line representing adults, shown in red, demonstrates a steady decrease from its highest point in 1994, declining towards 2016. This trend may reflect shifts in some possible reasons, like law enforcement strategies, policy changes, or a genuine drop in criminal behavior. In contrast, the juvenile arrests, depicted by the blue line, also show a continual decline, but with significantly lower figure compared to adult arrests.
 
