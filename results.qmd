@@ -32,6 +32,11 @@ arrest_adults <- select(arrest_adults, -state_abbr)
 arrest_adults[is.na(arrest_adults)] <- 0
 
 hate_crime22 <- select(hate_crime22, select = -c("adult_offender_count", "juvenile_offender_count", "juvenile_victim_count", "adult_victim_count", "total_individual_victims"))
+
+
+write.csv(arrest_juvenile, file = "preprocessing/arrests_national_juvenile_cleaned.csv", row.names = FALSE)
+write.csv(arrest_adults, file = "preprocessing/arrests_national_adults_cleaned.csv", row.names = FALSE)
+write.csv(hate_crime22, file = "preprocessing/hate_crime22_cleaned.csv", row.names = FALSE)
 ```
 
 ### Generate new features for boxplot and time series visualization
