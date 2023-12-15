@@ -169,10 +169,19 @@ ul.task-list li input[type="checkbox"] {
 
 </div>
 <div style="padding-left: 30px;">
+<h2 id="text" class="anchored">
+Click the button first to get the plot
+</h2>
+<h2 id="text" class="anchored">
+Click interested point in line to get the data
+</h2>
 <p>
 </p>
-<p><button onclick="update(juvenile)">Juvenile</button> <button onclick="update(adult)">Adult</button></p>
-</div>
+<p><button onclick="update(juvenile)">Juvenile</button> <button onclick="update(adult)">Adult</button> <button onclick="update(total)">Total</button></p>
+<p id="text">
+Please choose and click the button you are interested in. This will help you understand the arrest count in different age groups over time by year. Think of interactive plots as a more lively and engaging way to look at data compared to the usual static plots. You can zoom in on just one group. You will get the exact numbers for each year, and visualize the trend for specific category for a simple click.
+</p><p>
+</p></div>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="scripts/myscript.js"></script>
 
