@@ -11,7 +11,7 @@
 
 <div style="padding-left: 30px;">
   <h2 id = "text"> Click the button first to get the plot </h2>
-  <h2 id = "text"> Click interested point in line to get the data </h2>
+  <h2 id = "text"> Click point in line to get the data by year</h2>
   <p></p>
   <button onclick="update(juvenile)">Juvenile</button>
   <button onclick="update(adult)">Adult</button>
