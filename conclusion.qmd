@@ -1,1 +1,20 @@
 # Conclusion
+
+## Main Takeaway
+Our analysis indicates that age is a significant factor in arrest rates, suggesting that interventions targeting younger populations could be effective in reducing juvenile arrests. It is recommended that government resources be channeled towards early education to address this issue preemptively. 
+
+Furthermore, larceny emerges as the most prevalent offense, which we believe could stem from curiosity or financial hardship. To address this, enhancing social welfare programs could mitigate some of the economic pressures in the family that lead to such crimes. Additionally, stringent regulation and education regarding drug and alcohol use are crucial components of an effective crime reduction strategy.
+
+The data from 1995 to 2016 shows a downward trend in the number of offense arrests, suggesting that law enforcement measures and regulatory policies have had a positive effect.
+
+Contrary to initial expectations, certain regions of California—possibly the northern part, according to recent news reports—have exhibited notably high arrest rates. Meanwhile, New York's position among the top three for arrest rates aligns with our initial assumptions.
+
+## Limitation
+However, it's important to note that our dataset is not up-to-date; it contains arrest records only up to the year 2016 for both juveniles and adults. Our analysis might be biased since recent developments in nation might affect the result of our findings. Additionally, the original dataset for hate crimes was extensive, prompting us to narrow our focus to the year 2022. This particular year might be influenced by the COVID-19 pandemic, which leads to atypical instances of crime for specific reasons.
+
+Furthermore, the dataset captures offense names but does not account for associated economic factors. These factors could greatly influence both the rate of arrests and the incidence of hate crimes, presenting a limitation in our analysis.
+## Future improvement
+In the future, enhancing our dataset with supplementary online resources, such as national economic data, will allow us to probe into the potential connections between economic factors and crime rates. 
+
+Furthermore, as data science students, we hope to harness advanced analytics and machine learning techniques to develop more effective and proactive crime prevention strategies. By leveraging such cutting-edge tools, we aim to explore patterns and predictive factors and provide deeper insights that could lead to more targeted interventions in crime reduction efforts.
+
