@@ -1,6 +1,6 @@
 // add your JavaScript/D3 to this file
 
-// Create 2 datasets
+// Create 2 datasets (same as the d3_ts.csv)
 var juvenile = [{'year': 1994, 'arrestCount': 2220784},
   {'year': 1995, 'arrestCount': 2227409},
   {'year': 1996, 'arrestCount': 2159457},
@@ -49,10 +49,35 @@ var adult =  [{'year': 1994, 'arrestCount': 9742152},
   {'year': 2015, 'arrestCount': 8031139},
   {'year': 2016, 'arrestCount': 8075886}];
 
+var total =  [{'year': 1994, 'arrestCount': 11962936},
+  {'year': 1995, 'arrestCount': 12062062},
+  {'year': 1996, 'arrestCount': 11419294},
+  {'year': 1997, 'arrestCount': 11599439},
+  {'year': 1998, 'arrestCount': 11246192},
+  {'year': 1999, 'arrestCount': 10662950},
+  {'year': 2000, 'arrestCount': 10697335},
+  {'year': 2001, 'arrestCount': 10763891},
+  {'year': 2002, 'arrestCount': 10447854},
+  {'year': 2003, 'arrestCount': 10321490},
+  {'year': 2004, 'arrestCount': 10543821},
+  {'year': 2005, 'arrestCount': 10911940},
+  {'year': 2006, 'arrestCount': 10907702},
+  {'year': 2007, 'arrestCount': 11129736},
+  {'year': 2008, 'arrestCount': 11102671},
+  {'year': 2009, 'arrestCount': 11064113},
+  {'year': 2010, 'arrestCount': 10609186},
+  {'year': 2011, 'arrestCount': 9988586},
+  {'year': 2012, 'arrestCount': 9950269},
+  {'year': 2013, 'arrestCount': 9614243},
+  {'year': 2014, 'arrestCount': 9041963},
+  {'year': 2015, 'arrestCount': 8823935},
+  {'year': 2016, 'arrestCount': 8818369}];
+
+
 // set the dimensions and margins of the graph
 var margin = {top: 30, right: 30, bottom: 30, left: 80},
-    width = 600 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+    width = 600- margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("div#plot")

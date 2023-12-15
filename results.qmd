@@ -463,7 +463,7 @@ ggplot(top_bias, aes(x = n, y = reorder(bias_desc, n))) +
 
 The three separate Cleveland dot plots, with the number of incidents on the x-axis, address the question, "What are the top locations, offender races, and bias types in hate crimes for 2022?"
 
-The location graph aids in understanding whether the frequency of crimes in certain locations is due to a lack of sufficient surveillance or other motivating factors. The most common locations for hate crimes are residences or homes, followed by highways, roads, alleys, streets, sidewalks, and schools. The high incidence of crimes in residences or homes might be related to a high rate of larceny. Installing surveillance cameras at homes could mitigate potential losses. The significant number of incidents in schools also demands attention, emphasizing the need to strengthen management and safety measures in and around school environments.
+The most common locations for hate crimes are residences or homes, followed by highways, roads, alleys, streets, sidewalks, and schools. The high incidence of crimes in residences or homes might be related to a high rate of larceny. Installing surveillance cameras at homes could mitigate potential losses. The significant number of incidents in schools also demands attention, emphasizing the need to strengthen management and safety measures in and around school environments.
 
 The offender race graph indicates that the predominant racial group among hate crime offenders is White, followed by Black or African American, despite not specified and unknown.
 
