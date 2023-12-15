@@ -13,6 +13,7 @@ Contrary to initial expectations, certain regions of California—possibly the n
 However, it's important to note that our dataset is not up-to-date; it contains arrest records only up to the year 2016 for both juveniles and adults. Our analysis might be biased since recent developments in nation might affect the result of our findings. Additionally, the original dataset for hate crimes was extensive, prompting us to narrow our focus to the year 2022. This particular year might be influenced by the COVID-19 pandemic, which leads to atypical instances of crime for specific reasons.
 
 Furthermore, the dataset captures offense names but does not account for associated economic factors. These factors could greatly influence both the rate of arrests and the incidence of hate crimes, presenting a limitation in our analysis.
+
 ## Future improvement
 In the future, enhancing our dataset with supplementary online resources, such as national economic data, will allow us to probe into the potential connections between economic factors and crime rates. 
 
